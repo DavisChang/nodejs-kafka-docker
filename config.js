@@ -17,7 +17,12 @@ class KafkaConfig {
     this.producer = this.kafka.producer({
       createPartitioner: Partitioners.LegacyPartitioner,
     });
-    this.consumer = this.kafka.consumer({ groupId: kafkaGroupId });
+    this.consumer = this.kafka.consumer({
+      groupId: kafkaGroupId,
+      sessionTimeout: 30000, // 30 seconds
+      heartbeatInterval: 10000, // 10 seconds
+      maxPollInterval: 300000, // 5 minutes
+    });
   }
 
   async produce(topic, messages) {

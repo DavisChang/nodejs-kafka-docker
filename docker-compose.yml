@@ -1,7 +1,6 @@
-version: "3.3"
 services:
   zookeeper:
-    image: bitnami/zookeeper:3.7.0
+    image: bitnami/zookeeper:3.9.2
     container_name: zookeeper
     ports:
       - "2181:2181"
@@ -11,12 +10,10 @@ services:
       - ./bitnami/zookeeper:/bitnami/zookeeper
 
   kafka:
-    image: bitnami/kafka:2.8.0
+    image: bitnami/kafka:3.3.2
     container_name: kafka
     ports:
       - "9093:9093"
-    expose:
-      - "9093"
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_CREATE_TOPICS="kafka_topic_name:1:1"
@@ -32,12 +29,12 @@ services:
       - ./bitnami/kafka:/bitnami/kafka
 
   kafdrop:
-    image: obsidiandynamics/kafdrop
+    image: obsidiandynamics/kafdrop:4.0.2
     container_name: kafdrop
+    platform: linux/amd64 # Specify platform for kafdrop
     ports:
       - "9000:9000"
     environment:
-      KAFKA_BROKERCONNECT: "kafka:9092"
-      JVM_OPTS: "-Xms32M -Xmx128M -noverify"
+      - KAFKA_BROKERCONNECT=kafka:9092
     depends_on:
       - kafka

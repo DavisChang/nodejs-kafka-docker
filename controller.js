@@ -8,8 +8,11 @@ const sendMessageToKafka = async (req, res) => {
     const { message } = req.body;
     const kafkaConfig = new KafkaConfig();
 
+    // Kafka Producer with Key-Based Partitioning
     const randomNumber = Math.floor(Math.random() * keys.length);
+    // Partitioning key
     const randomKey = keys[randomNumber];
+
     const messages = [{ key: randomKey, value: message + ":" + randomKey }];
     kafkaConfig.produce(kafkaTopic, messages);
 
