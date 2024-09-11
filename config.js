@@ -5,9 +5,9 @@ class KafkaConfig {
   constructor() {
     this.kafka = new Kafka({
       clientId: "nodejs-kafka",
-      // brokers: ["localhost:9093"],
+      brokers: ["localhost:9093"],
       // Kafka (3 Brokers)
-      brokers: ["localhost:9092", "localhost:9093", "localhost:9094"],
+      // brokers: ["localhost:9092", "localhost:9093", "localhost:9094"],
       connectionTimeout: 3000, // Timeout for establishing a connection
       retry: {
         initialRetryTime: 300, // Initial backoff delay
